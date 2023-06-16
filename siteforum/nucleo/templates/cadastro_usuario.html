@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro de Usuário</title>
+</head>
+<body>
+    <h1>Cadastro de Usuário</h1>
+    
+    <form method="POST" action="{% url 'cadastro_usuario' %}">
+        <!-- {% csrf_token %} Cross-Site Request Forgery - segurança --> 
+        
+        <label for="usuario">Usuário:</label>
+        <input type="text" name="usuario" required>
+        
+        <label for="senha">Senha:</label>
+        <input type="password" name="senha" required>
+        
+        <label for="email">E-mail:</label>
+        <input type="email" name="email" required>
+        
+        <label for="cpf">CPF:</label>
+        <input type="text" name="cpf" required>
+        
+        <label for="endereco">Endereço:</label>
+        <input type="text" name="endereco" required>
+        
+        <input type="submit" value="Cadastrar">
+    </form>
+</body>
+</html>
