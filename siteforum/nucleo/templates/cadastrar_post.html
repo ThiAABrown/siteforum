@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastrar Post</title>
+</head>
+<body>
+    <h1>Cadastrar Post</h1>
+    <form method="post" action="{% url 'cadastrar_post' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Cadastrar</button>
+    </form>
+</body>
+</html>

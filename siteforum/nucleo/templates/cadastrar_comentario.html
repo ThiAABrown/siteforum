@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Comentário</title>
+    </head>
+    <body>
+    <h1>Comentário</h1>
+        <h2>Cadastrar Comentário</h2>
+        <form action="{% url 'cadastrar_comentario' post_id=post_id %}" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+        <button type="submit">Enviar</button>
+        </form>
+
+    </body>
+</html>
