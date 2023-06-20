@@ -1,10 +1,25 @@
 from django.shortcuts import render, redirect
-from .models import CadastroUsuario, Post, Comentario
+from django.contrib.auth import authenticate, login
 
+from .models import CadastroUsuario, Post, Comentario
 from .forms import PostForm, ComentarioForm, PostForm
 
 def home(request):
-    return render(request, 'nucleo/home.html')
+    return render(request, 'home.html')
+
+def login_usuario(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect('home')  # Redirecionar para a página inicial após o login
+        else:
+            return render(request, 'login.html', {'error_message': 'Credenciais inválidas.'})
+    
+    return render(request, 'login.html')
 
 def cadastrar_usuario(request):
     if request.method == 'POST':
