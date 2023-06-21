@@ -1,5 +1,13 @@
 from django import forms
-from .models import Post, Comentario
+from .models import CustomUser, Post, Comentario
+
+class CadastroUsuarioForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password', 'email', 'nome', 'sobrenome', 'sexo', 'data_nascimento']
+        widgets = {
+            'password': forms.PasswordInput()
+        }
 
 class PostForm(forms.ModelForm):
     class Meta:

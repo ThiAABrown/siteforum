@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 
-from .models import CadastroUsuario, Post, Comentario
-from .forms import PostForm, ComentarioForm, PostForm
+from .models import CadastroUsuario, CustomUser, Post, Comentario
+from .forms import PostForm, ComentarioForm, CadastroUsuarioForm
 
 def home(request):
     return render(request, 'home.html')
@@ -23,18 +23,36 @@ def login_usuario(request):
 
 def cadastrar_usuario(request):
     if request.method == 'POST':
-        usuario = request.POST['usuario']
-        senha = request.POST['senha']
-        email = request.POST['email']
-        cpf = request.POST['cpf']
-        endereco = request.POST['endereco']
-        
-        CadastroUsuario.objects.create(usuario=usuario, senha=senha, email=email, cpf=cpf, endereco=endereco)
-        
-        return redirect('home')
+        form = CadastroUsuarioForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['usuario']
+            password = form.cleaned_data['senha']
+            email = form.cleaned_data['email']
+            cpf = form.cleaned_data['cpf']
+            endereco = form.cleaned_data['endereco']
+            nome = form.cleaned_data['nome']
+            sobrenome = form.cleaned_data['sobrenome']
+            sexo = form.cleaned_data['sexo']
+            data_nascimento = form.cleaned_data['data_nascimento']
+            
+            user = CustomUser.objects.create_user(username=username, password=password, email=email)
+            user.nome = nome
+            user.sobrenome = sobrenome
+            user.sexo = sexo
+            user.data_nascimento = data_nascimento
+            user.save()
+            
+            CadastroUsuario.objects.create(usuario=user, cpf=cpf, endereco=endereco)
+            
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
     
-    return render(request, 'cadastro_usuario.html')
-
+    else:
+        form = CadastroUsuarioForm()
+    
+    return render(request, 'cadastro_usuario.html', {'form': form})
 
 def cadastrar_post(request):
     if request.method == 'POST':
