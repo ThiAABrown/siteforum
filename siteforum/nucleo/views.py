@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+
 
 from .models import CadastroUsuario, CustomUser, Post, Comentario
 from .forms import PostForm, ComentarioForm, CadastroUsuarioForm
@@ -20,6 +22,18 @@ def login_usuario(request):
             return render(request, 'login.html', {'error_message': 'Credenciais inválidas.'})
     
     return render(request, 'login.html')
+
+@login_required
+def atualizar_cadastro(request):
+    user = request.user
+    if request.method == 'POST':
+        form = CadastroUsuarioForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = CadastroUsuarioForm(instance=user)
+    return render(request, 'atualizar_cadastro.html', {'form': form})
 
 def cadastrar_usuario(request):
     if request.method == 'POST':
