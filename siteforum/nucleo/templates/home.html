@@ -5,6 +5,10 @@
 </head>
 <body>
     <h1>Bem-vindo à Página Inicial</h1>
+
+    <a href="{% url 'login' %}">
+        <button>Login</button>
+    </a>
     
     <a href="{% url 'cadastro_usuario' %}">
         <button>Cadastrar Usuário</button>
@@ -16,5 +20,14 @@
     <a href="{% url 'atualizar_cadastro' %}">
         <button>Atualizar Cadastro</button>
     </a>
+
+    <br/>
+
+    <h2>Posts:</h2>
+    <ul>
+        {% for post in posts %}
+        <li>{{ post.titulo }}</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

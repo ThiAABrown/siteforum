@@ -7,7 +7,8 @@ from .models import CadastroUsuario, CustomUser, Post, Comentario
 from .forms import PostForm, ComentarioForm, CadastroUsuarioForm
 
 def home(request):
-    return render(request, 'home.html')
+    posts = Post.objects.all()
+    return render(request, 'home.html', {'posts': posts})
 
 def login_usuario(request):
     if request.method == 'POST':
@@ -68,6 +69,7 @@ def cadastrar_usuario(request):
     
     return render(request, 'cadastro_usuario.html', {'form': form})
 
+@login_required
 def cadastrar_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -79,6 +81,7 @@ def cadastrar_post(request):
     
     return render(request, 'cadastrar_post.html', {'form': form})
 
+@login_required
 def cadastrar_comentario(request, post_id):
     post = Post.objects.get(pk=post_id)
 

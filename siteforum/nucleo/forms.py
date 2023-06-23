@@ -13,6 +13,7 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['assunto', 'autor', 'categoria', 'mensagem']
+        widgets = {'usuario': forms.HiddenInput()}
 
 class ComentarioForm(forms.ModelForm):
     class Meta:
