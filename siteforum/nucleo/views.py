@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
 
-from .models import CadastroUsuario, CustomUser, Post, Comentario
+from .models import CustomUser, Post, Comentario
 from .forms import PostForm, ComentarioForm, CadastroUsuarioForm
 
 def home(request):
@@ -57,7 +57,7 @@ def cadastrar_usuario(request):
             user.data_nascimento = data_nascimento
             user.save()
             
-            CadastroUsuario.objects.create(usuario=user, cpf=cpf, endereco=endereco)
+            CadastroUsuarioForm.objects.create(usuario=user, cpf=cpf, endereco=endereco)
             
             user = authenticate(username=username, password=password)
             if user is not None:
@@ -74,7 +74,9 @@ def cadastrar_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
-            form.save()
+            post = form.save(commit=False)
+            post.autor = request.user
+            post.save()
             return redirect('home')  # Redirecionar para a página inicial após cadastrar o post
     else:
         form = PostForm()
@@ -89,6 +91,7 @@ def cadastrar_comentario(request, post_id):
         form = ComentarioForm(request.POST)
         if form.is_valid():
             comentario = form.save(commit=False)
+            comentario.autor = request.user
             comentario.post = post
             comentario.save()
             return redirect('post', post_id=post_id)  # Redirecionar para a página de detalhes do post
