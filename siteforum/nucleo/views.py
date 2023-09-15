@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
+import ipdb
+
 
 from .models import CustomUser, Post, Comentario
 from .forms import PostForm, ComentarioForm, CadastroUsuarioForm
@@ -37,6 +39,7 @@ def atualizar_cadastro(request):
     return render(request, 'atualizar_cadastro.html', {'form': form})
 
 def cadastrar_usuario(request):
+        #ipdb     __import__('ipdb').set_trace()
     if request.method == 'POST':
         form = CadastroUsuarioForm(request.POST)
         if form.is_valid():
@@ -82,6 +85,13 @@ def cadastrar_post(request):
         form = PostForm()
     
     return render(request, 'cadastrar_post.html', {'form': form})
+
+@login_required
+def detalhe_post(request, post_id):
+    context = {
+        'post' : Post.objects.get(id=post_id)
+    }
+    return render(request, 'detalhe_post.html', context)
 
 @login_required
 def cadastrar_comentario(request, post_id):
