@@ -127,3 +127,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Configuração dos dados de usuario no models
 AUTH_USER_MODEL = 'nucleo.CustomUser'
 
+LOGIN_REDIRECT_URL = '/home/'  # Substitua '/profile/' pela URL desejada

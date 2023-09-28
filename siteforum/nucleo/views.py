@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 import ipdb
@@ -26,6 +26,11 @@ def login_usuario(request):
     
     return render(request, 'login.html')
 
+def logout_usuario(request):
+    if request.method == 'POST' and request.user.is_authenticated:
+        logout(request)
+    return redirect('home')
+
 @login_required
 def atualizar_cadastro(request):
     user = request.user
@@ -39,12 +44,12 @@ def atualizar_cadastro(request):
     return render(request, 'atualizar_cadastro.html', {'form': form})
 
 def cadastrar_usuario(request):
-        #ipdb     __import__('ipdb').set_trace()
     if request.method == 'POST':
         form = CadastroUsuarioForm(request.POST)
+        __import__('ipdb').set_trace()
         if form.is_valid():
-            username = form.cleaned_data['usuario']
-            password = form.cleaned_data['senha']
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
             email = form.cleaned_data['email']
             cpf = form.cleaned_data['cpf']
             endereco = form.cleaned_data['endereco']
@@ -53,14 +58,14 @@ def cadastrar_usuario(request):
             sexo = form.cleaned_data['sexo']
             data_nascimento = form.cleaned_data['data_nascimento']
             
-            user = CustomUser.objects.create_user(username=username, password=password, email=email)
+            user = CustomUser.objects.create_user(username=username, email=email)
             user.nome = nome
             user.sobrenome = sobrenome
             user.sexo = sexo
             user.data_nascimento = data_nascimento
+            user.set_password(password)
+            #__import__('ipdb').set_trace()
             user.save()
-            
-            CadastroUsuarioForm.objects.create(usuario=user, cpf=cpf, endereco=endereco)
             
             user = authenticate(username=username, password=password)
             if user is not None:

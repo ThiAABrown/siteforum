@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Cadastro de Usuário</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block conteudo %}
+
     <h1>Cadastro de Usuário</h1>
     
     <form method="POST" action="{% url 'cadastro_usuario' %}">
-        {% csrf_token %} <!-- Cross-Site Request Forgery - segurança --> 
+        {% csrf_token %} <!-- Cross-Site Request Forgery - "segurança" --> 
         
-        <label for="usuario">Usuário:</label>
-        <input type="text" name="usuario" required>
+        <label for="username">Usuário:</label>
+        <input type="text" name="username" required>
         
-        <label for="senha">Senha:</label>
-        <input type="password" name="senha" required>
+        <label for="password">Senha:</label>
+        <input type="password" name="password" required>
         
         <label for="email">E-mail:</label>
         <input type="email" name="email" required>
@@ -41,5 +39,5 @@
     <a href="{% url 'home' %}">
         <button>Voltar</button>
     </a>
-</body>
-</html>
+
+{% endblock conteudo %}

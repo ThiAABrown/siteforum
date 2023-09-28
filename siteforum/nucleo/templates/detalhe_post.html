@@ -1,19 +1,26 @@
-<!DOCTYPE html>
-<html>
-    <head>
-    <title></title>
-    </head>
-    <body>
-        <div class="container">
-            <h2>Detalhes</h2>
-            <div class="container">
-                <p>{{ post.id }}</p>
-                <p>{{ post.assunto }}</p>
-                <p>{{ post.autor }}</p>
-                <p>{{ post.categoria }}</p>
-                <p>{{ post.data_postagem }}</p>
-                <p>{{ post.mensagem }}</p>
-            </div>
-        </div>
-    </body>
-</html>
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<div class="container">
+    <h2>Detalhes</h2>
+    <div class="container">
+        <p>{{ post.id }}</p>
+        <p>{{ post.assunto }}</p>
+        <p>{{ post.autor }}</p>
+        <p>{{ post.categoria }}</p>
+        <p>{{ post.data_postagem }}</p>
+        <p>{{ post.mensagem }}</p>
+    </div>
+
+    <a href="{% url 'cadastrar_comentario' %}">
+        <button>Adicionar Comentário</button>
+    </a>
+
+    <a href="{% url 'home' %}">
+        <button>Voltar</button>
+    </a>
+
+</div>
+
+{% endblock conteudo %}

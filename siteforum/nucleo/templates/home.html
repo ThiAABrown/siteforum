@@ -1,34 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <h1>Bem-vindo à Página Inicial</h1>
+{% extends "base.html" %}
 
-    <a href="{% url 'login' %}">
-        <button>Login</button>
-    </a>
-    
-    <a href="{% url 'cadastro_usuario' %}">
-        <button>Cadastrar Usuário</button>
-    </a>
-    
-    <a href="{% url 'cadastrar_post' %}">
-        <button>Cadastrar Post</button>
-    </a>
-    <a href="{% url 'atualizar_cadastro' %}">
-        <button>Atualizar Cadastro</button>
-    </a>
 
-    <br/>
+{% block conteudo %}
 
+<div>
     <h2>Posts:</h2>
     <ul>
         {% for post in posts %}
-        <li>{{ post.assunto }}</li>
-        
+        <li scope="row"><a href="{% url 'detalhe_post' post.id %}"> {{ post.assunto }} </a></li>
         {% endfor %}
     </ul>
-</body>
-</html>
+</div>
+
+{% endblock conteudo %}

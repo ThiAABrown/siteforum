@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Atualizar Cadastro</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block conteudo %}
+
     <h1>Atualizar Cadastro</h1>
     
     <form method="POST" action="">
@@ -16,5 +14,5 @@
     <a href="{% url 'home' %}">
         <button>Voltar</button>
     </a>
-</body>
-</html>
+
+{% endblock conteudo %}

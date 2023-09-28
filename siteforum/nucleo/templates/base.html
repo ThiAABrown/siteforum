@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="pt-br">
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Thiago Brown">
+    
+    <h1>SiteForum
+        {% if user.is_authenticated %}
+    <p>Bem-vindo, {{ user.nome }}!</p>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+        {% else %}
+    <p>Você não está logado! </br> Realize o login para interagir</p>
+        {% endif %}
+    </h1>
+
+    <div>
+        <a href="{% url 'login' %}">
+            <button>Login</button>
+        </a>
+        
+        <a href="{% url 'cadastro_usuario' %}">
+            <button>Cadastrar Usuário</button>
+        </a>
+        
+        <a href="{% url 'cadastrar_post' %}">
+            <button>Cadastrar Post</button>
+        </a>
+        <a href="{% url 'atualizar_cadastro' %}">
+            <button>Atualizar Cadastro</button>
+        </a>
+    </div>
+
+    <br/>
+
+    <div>
+        {% block conteudo %} {% endblock conteudo %}
+    </div>
+</body>
+</html>

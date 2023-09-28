@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <head>
-    <title>Comentário</title>
-    </head>
-    <body>
+{% extends "base.html" %}
+
+{% block conteudo %}
+
     <h1>Comentário</h1>
         <h2>Cadastrar Comentário</h2>
         <form action="{% url 'cadastrar_comentario' post_id=post_id %}" method="POST">
@@ -15,5 +13,4 @@
             <button>Voltar para o post</button>
         </a>
 
-    </body>
-</html>
+{% endblock conteudo %}
