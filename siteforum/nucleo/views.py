@@ -64,7 +64,6 @@ def cadastrar_usuario(request):
             user.sexo = sexo
             user.data_nascimento = data_nascimento
             user.set_password(password)
-            #__import__('ipdb').set_trace()
             user.save()
             
             user = authenticate(username=username, password=password)
@@ -109,7 +108,7 @@ def cadastrar_comentario(request, post_id):
             comentario.autor = request.user
             comentario.post = post
             comentario.save()
-            return redirect('post', post_id=post_id)  # Redirecionar para a página de detalhes do post
+            return redirect('detalhe_post', post_id=post_id)  # Redirecionar para a página de detalhes do post
     else:
         form = ComentarioForm()
     

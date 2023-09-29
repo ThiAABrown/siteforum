@@ -12,7 +12,7 @@ urlpatterns = [
     path('atualizarcadastro/', atualizar_cadastro, name='atualizar_cadastro'),
     path('cadastrarpost/', cadastrar_post, name='cadastrar_post'),
     path('postdetalhes/<int:post_id>', detalhe_post, name='detalhe_post'),
-    path('cadastrarcomentario/', cadastrar_comentario, name='cadastrar_comentario'),
+    path('cadastrarcomentario/<int:post_id>', cadastrar_comentario, name='cadastrar_comentario'),
     path('login/', LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', logout_usuario, name='logout'),
 ]

@@ -5,7 +5,6 @@
 <div class="container">
     <h2>Detalhes</h2>
     <div class="container">
-        <p>{{ post.id }}</p>
         <p>{{ post.assunto }}</p>
         <p>{{ post.autor }}</p>
         <p>{{ post.categoria }}</p>
@@ -13,7 +12,14 @@
         <p>{{ post.mensagem }}</p>
     </div>
 
-    <a href="{% url 'cadastrar_comentario' %}">
+    <div class="container">
+        <h2>Comentários</h2>
+        <div class="container">
+
+        </div>
+    </div>
+
+    <a href="{% url 'cadastrar_comentario' post.id %}">
         <button>Adicionar Comentário</button>
     </a>
 

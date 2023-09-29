@@ -2,10 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 
-# from django.db.models.signals import pre_save
-# from django.dispatch import receiver
-# from django.contrib.auth import get_user_model
-
 class CustomUser(AbstractUser):
     nome = models.CharField(max_length=100, blank=True, null=True)
     sobrenome = models.CharField(max_length=100, blank=True, null=True)
@@ -38,7 +34,3 @@ class Comentario(models.Model):
     def __str__(self):
         return f"Comentário por {self.autor} em {self.post}"
     
-# @receiver(pre_save, sender=Post)
-# def set_author_on_post_creation(sender, instance, **kwargs):
-#     if instance._state.adding:  # Check if the instance is being created
-#         instance.autor = instance.autor or get_user_model().objects.get(username='default_user')
