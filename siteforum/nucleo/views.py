@@ -93,7 +93,8 @@ def cadastrar_post(request):
 @login_required
 def detalhe_post(request, post_id):
     context = {
-        'post' : Post.objects.get(id=post_id)
+        'post' : Post.objects.get(id=post_id),
+        'comentarios' : Comentario.objects.filter(post=post_id)
     }
     return render(request, 'detalhe_post.html', context)
 

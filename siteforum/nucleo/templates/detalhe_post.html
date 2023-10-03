@@ -15,7 +15,14 @@
     <div class="container">
         <h2>Comentários</h2>
         <div class="container">
-
+            <ul>
+                {% for comentario in comentarios %}
+                    <li>
+                        {{ comentario.mensagem }}
+                        <p>Por: {{ comentario.autor }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 
