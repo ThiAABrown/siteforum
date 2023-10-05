@@ -2,8 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-import ipdb
-
 
 from .models import CustomUser, Post, Comentario
 from .forms import PostForm, ComentarioForm, CadastroUsuarioForm
@@ -34,10 +32,38 @@ def logout_usuario(request):
 @login_required
 def atualizar_cadastro(request):
     user = request.user
+    if user.nome is None:
+        user.nome = ''
+    if user.sobrenome is None:
+        user.sobrenome = ''
+    if user.email is None:
+        user.email = ''
+    if user.cpf is None:
+        user.cpf = ''
+    if user.endereco is None:
+        user.endereco = ''
+
     if request.method == 'POST':
         form = CadastroUsuarioForm(request.POST, instance=user)
         if form.is_valid():
-            form.save()
+            # password = form.cleaned_data['password']
+            email = form.cleaned_data['email']
+            cpf = form.cleaned_data['cpf']
+            endereco = form.cleaned_data['endereco']
+            nome = form.cleaned_data['nome']
+            sobrenome = form.cleaned_data['sobrenome']
+            sexo = form.cleaned_data['sexo']
+            data_nascimento = form.cleaned_data['data_nascimento']
+            
+            user.nome = nome
+            user.sobrenome = sobrenome
+            user.email = email
+            user.cpf = cpf
+            user.endereco = endereco
+            user.sexo = sexo
+            user.data_nascimento = data_nascimento
+            # user.set_password(password)
+            user.save()
             return redirect('home')
     else:
         form = CadastroUsuarioForm(instance=user)
@@ -46,7 +72,6 @@ def atualizar_cadastro(request):
 def cadastrar_usuario(request):
     if request.method == 'POST':
         form = CadastroUsuarioForm(request.POST)
-        __import__('ipdb').set_trace()
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
