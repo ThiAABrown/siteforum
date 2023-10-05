@@ -4,8 +4,6 @@
 
     <h1>Comentário</h1>
         <h2>Cadastrar Comentário</h2>
-        <p>post.id = {{post.id}}</p>
-        <p>post_id = {{post_id}}</p>
         <form action="{% url 'cadastrar_comentario' post.id %}" method="POST">
             {% csrf_token %}
             {{ form.as_p }}
