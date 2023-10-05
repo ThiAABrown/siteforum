@@ -61,6 +61,8 @@ def cadastrar_usuario(request):
             user = CustomUser.objects.create_user(username=username, email=email)
             user.nome = nome
             user.sobrenome = sobrenome
+            user.cpf = cpf
+            user.endereco = endereco
             user.sexo = sexo
             user.data_nascimento = data_nascimento
             user.set_password(password)
