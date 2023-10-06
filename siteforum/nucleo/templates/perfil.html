@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<div class="container">
+    <h2>Perfil de {{ user.username }}</h2>
+        <p>Nome: {{ user.nome }} {{ user.sobrenome }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>CPF: {{ user.cpf }}</p>
+        <p>Endereço: {{ user.endereco }}</p>
+        <p>Sexo: {{ user.sexo }}</p>
+        <p>Data de Nascimento: {{ user.data_nascimento }}</p>
+</div>
+        <br/>
+    <a href="{% url 'atualizar_cadastro' %}">
+        <button>Atualizar Cadastro</button>
+    </a>
+
+    <a href="{% url 'home' %}">
+        <button>Voltar</button>
+    </a>
+
+{% endblock conteudo %}

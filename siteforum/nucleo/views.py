@@ -104,6 +104,11 @@ def cadastrar_usuario(request):
     return render(request, 'cadastro_usuario.html', {'form': form})
 
 @login_required
+def perfil(request):
+    user = request.user
+    return render(request, 'perfil.html', {'user': user})
+
+@login_required
 def cadastrar_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)

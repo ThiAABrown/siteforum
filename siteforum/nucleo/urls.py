@@ -2,13 +2,14 @@ from django.urls import path
 from django.contrib.auth.views import LoginView
 
 
-from .views import cadastrar_usuario, cadastrar_post, detalhe_post, cadastrar_comentario, atualizar_cadastro, logout_usuario
+from .views import cadastrar_usuario, cadastrar_post, detalhe_post, cadastrar_comentario, atualizar_cadastro, logout_usuario, perfil
 from . import views
 
 
 urlpatterns = [
     path('cadastrousuario/', cadastrar_usuario, name='cadastro_usuario'),
     path('home/', views.home, name='home'),
+    path('perfil/', views.perfil, name='perfil'),
     path('atualizarcadastro/', atualizar_cadastro, name='atualizar_cadastro'),
     path('cadastrarpost/', cadastrar_post, name='cadastrar_post'),
     path('postdetalhes/<int:post_id>', detalhe_post, name='detalhe_post'),
