@@ -16,7 +16,6 @@ class PostAdmin(admin.ModelAdmin):
     fields = ('assunto', 'categoria', 'mensagem',)
 
     def save_model(self, request, obj, form, change):
-        # __import__('ipdb').set_trace()
         obj.autor = request.user
         super().save_model(request, obj, form, change)
 

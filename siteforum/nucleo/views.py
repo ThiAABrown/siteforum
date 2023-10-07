@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 from .models import CustomUser, Post, Comentario
@@ -28,6 +29,41 @@ def logout_usuario(request):
     if request.method == 'POST' and request.user.is_authenticated:
         logout(request)
     return redirect('home')
+
+def cadastrar_usuario(request):
+    if request.method == 'POST':
+        form = CadastroUsuarioForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            email = form.cleaned_data['email']
+            cpf = form.cleaned_data['cpf']
+            endereco = form.cleaned_data['endereco']
+            nome = form.cleaned_data['nome']
+            sobrenome = form.cleaned_data['sobrenome']
+            sexo = form.cleaned_data['sexo']
+            data_nascimento = form.cleaned_data['data_nascimento']
+            
+            user = CustomUser.objects.create_user(username=username, email=email)
+            user.nome = nome
+            user.sobrenome = sobrenome
+            user.cpf = cpf
+            user.endereco = endereco
+            user.sexo = sexo
+            user.data_nascimento = data_nascimento
+            user.set_password(password)
+            user.save()
+            
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+    
+    else:
+        form = CadastroUsuarioForm()
+    
+    return render(request, 'cadastro_usuario.html', {'form': form})
+
 
 @login_required
 def atualizar_cadastro(request):
@@ -69,39 +105,29 @@ def atualizar_cadastro(request):
         form = CadastroUsuarioForm(instance=user)
     return render(request, 'atualizar_cadastro.html', {'form': form})
 
-def cadastrar_usuario(request):
+@login_required
+def atualizar_senha(request):
     if request.method == 'POST':
-        form = CadastroUsuarioForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            email = form.cleaned_data['email']
-            cpf = form.cleaned_data['cpf']
-            endereco = form.cleaned_data['endereco']
-            nome = form.cleaned_data['nome']
-            sobrenome = form.cleaned_data['sobrenome']
-            sexo = form.cleaned_data['sexo']
-            data_nascimento = form.cleaned_data['data_nascimento']
-            
-            user = CustomUser.objects.create_user(username=username, email=email)
-            user.nome = nome
-            user.sobrenome = sobrenome
-            user.cpf = cpf
-            user.endereco = endereco
-            user.sexo = sexo
-            user.data_nascimento = data_nascimento
-            user.set_password(password)
+        password = request.POST['password']
+        new_password = request.POST['new_password']
+        user = request.user
+
+        # Para verificar se a senha atual do usuário é válida
+        if user.check_password(password):
+            # set_password() para atualizar a senha
+            user.set_password(new_password)
             user.save()
-            
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('home')
-    
-    else:
-        form = CadastroUsuarioForm()
-    
-    return render(request, 'cadastro_usuario.html', {'form': form})
+
+            # Para autenticar o usuário novamente e mantê-lo logado
+            autenticacao_user = authenticate(request, username=user.username, password=new_password)
+            login(request, autenticacao_user)
+
+            messages.success(request, 'Sua senha foi atualizada com sucesso.')
+            return redirect('perfil')  # Redirecionar para a página de perfil após a atualização da senha
+        else:
+            messages.error(request, 'A senha atual inserida está incorreta.')
+    return render(request, 'atualizar_senha.html')
+
 
 @login_required
 def perfil(request):

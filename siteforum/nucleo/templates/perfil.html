@@ -10,10 +10,19 @@
         <p>Sexo: {{ user.sexo }}</p>
         <p>Data de Nascimento: {{ user.data_nascimento }}</p>
 </div>
-        <br/>
+    <br/>
+
     <a href="{% url 'atualizar_cadastro' %}">
         <button>Atualizar Cadastro</button>
     </a>
+
+    <br/>
+
+    <a href="{% url 'atualizar_senha' %}">
+        <button>Mudar Senha</button>
+    </a>
+
+    <br/>
 
     <a href="{% url 'home' %}">
         <button>Voltar</button>
