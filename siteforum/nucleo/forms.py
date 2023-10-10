@@ -9,6 +9,12 @@ class CadastroUsuarioForm(forms.ModelForm):
             'password': forms.PasswordInput()
         }
 
+class AtualizarUsuarioForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'cpf', 'endereco', 'nome', 'sobrenome', 'sexo', 'data_nascimento']
+
+
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post

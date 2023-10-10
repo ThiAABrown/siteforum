@@ -5,7 +5,7 @@ from django.contrib import messages
 
 
 from .models import CustomUser, Post, Comentario
-from .forms import PostForm, ComentarioForm, CadastroUsuarioForm
+from .forms import PostForm, ComentarioForm, CadastroUsuarioForm, AtualizarUsuarioForm
 
 def home(request):
     posts = Post.objects.all()
@@ -78,9 +78,9 @@ def atualizar_cadastro(request):
         user.cpf = ''
     if user.endereco is None:
         user.endereco = ''
-
+    __import__('ipdb').set_trace()
     if request.method == 'POST':
-        form = CadastroUsuarioForm(request.POST, instance=user)
+        form = AtualizarUsuarioForm(request.POST, instance=user)
         if form.is_valid():
             # password = form.cleaned_data['password']
             email = form.cleaned_data['email']
